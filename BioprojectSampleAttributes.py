@@ -13,9 +13,9 @@ import urllib
 # 2. Identify if the project uses a template similar to other studies
 
  
-def getSampleAttributes(sampleID, attDetails, url):
-#	print (urllib.urlopen(url+str(sampleID)).read())
- 	tree = ET.parse(urllib.urlopen(url+str(sampleID)))
+def getSampleAttributes(attDetails, url):
+#	print (urllib.urlopen(url).read())
+ 	tree = ET.parse(urllib.urlopen(url))
  	root = tree.getroot()
  	for samp in root:
  		print ("sample:" + str(samp.get('id')))
@@ -38,7 +38,7 @@ def bioprojectAttributes(bioprojectID,apikey):
 	eutils = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 	elink = eutils + 'elink.fcgi?dbfrom=bioproject&db=biosample&retmode=json&linkname=bioproject_biosample&api_key='+apikey
 	pfetch = eutils + 'efetch.fcgi?db=bioproject&api_key='+ apikey+'&id='
-	sfetch = eutils + 'efetch.fcgi?db=biosample&api_key='+ apikey+'&id='
+	sfetch = eutils + 'efetch.fcgi?db=biosample&api_key='+ apikey
 	
 	# get linked samples
 	# the behavior of elink is such that the call to it will only retrieve 500 samples
@@ -46,23 +46,29 @@ def bioprojectAttributes(bioprojectID,apikey):
 	url = elink + '&id=' + bioprojectID 
 	attDetails = {}
 
-	#print url
+	# first we do the query and get a list of ids so we know how many hits we get
+
+	r = requests.get(url)
+	b = r.json()
+	d = b['linksets'][0]['linksetdbs'][0]['links']
+	sCount = len(d)
+	
+	# now do the same query to set up the list in the history server
+	# there may be a way of getting this from this second query -
+	# but I haven't found how	
+	url += '&cmd=neighbor_history'
 	r = requests.get(url)
 	b = r.json()
 	d = b['linksets'][0]
-	p = d['linksetdbs'][0]
-	h = p['links']
-	
-	# call efetch for a chunk of sample ids in one go
-	# so far calling for 25 ids at once seems to be a good compromise between the number
-	# of calls that must be made and requesting too many ids which makes any call too slow
-	idchunk = 25
- 	for i in xrange(0,len(h),idchunk):
- 		# create a slice of ids and turn it into a comma delimited string w no spaces
- 		# the ids are numbers - so they must also be converted to strings
-		sl = ','.join(map(str, h[i:i+idchunk])) 
- 		getSampleAttributes(sl, attDetails, sfetch)
- 		print '____________________________________'
+	webenv = d['webenv']
+	print webenv
+	querykey = d['linksetdbhistories'][0]['querykey']
+	print querykey
+	url = sfetch + '&query_key='+querykey+'&WebEnv='+webenv
+	print url
+
+ 	getSampleAttributes(attDetails, url)
+ 	print '____________________________________'
  	
  	# Get some details of the bioproject
  	tree = ET.parse(urllib.urlopen(pfetch+bioprojectID))
@@ -78,7 +84,7 @@ def bioprojectAttributes(bioprojectID,apikey):
 	uniques = {}	
 	almostUniques = {}	
 	constants = {}	
-	print 'No of samples:' + str(len(h))
+	print 'No of samples:' + str(sCount)
  	print '____________________________________'
  	print 	'The following attributes vary across samples.'
  	print 	'Some may indicate the project design/model.'
@@ -90,7 +96,7 @@ def bioprojectAttributes(bioprojectID,apikey):
  			uniques[aname] = att
  		elif 100.0*len(vList)/att['sampleCount'] > 80.0:
  			almostUniques[aname] = att
- 		elif len(vList) == 1 and vList.values()[0] == len(h):
+ 		elif len(vList) == 1 and vList.values()[0] == sCount:
  			constants[aname] = att
  		else:
  			print 'Attribute:' + aname + ' total:' + str(att['sampleCount'])

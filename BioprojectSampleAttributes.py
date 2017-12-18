@@ -79,6 +79,7 @@ def bioprojectAttributes(bioprojectID,apikey):
 	uniques = {}	
 	almostUniques = {}	
 	constants = {}	
+	singleValue = {}	
 	print 'No of samples:' + str(sCount)
  	print '____________________________________'
  	print 	'The following attributes vary across samples.'
@@ -89,11 +90,19 @@ def bioprojectAttributes(bioprojectID,apikey):
  		vList = att['values']
  		if len(vList) == att['sampleCount']:
  			uniques[aname] = att
+ 			att['variability'] = 'u'
  		elif 100.0*len(vList)/att['sampleCount'] > 80.0:
  			almostUniques[aname] = att
- 		elif len(vList) == 1 and vList.values()[0] == sCount:
- 			constants[aname] = att
+ 			att['variability'] = 'au'
+ 		elif len(vList) == 1:
+ 			if vList.values()[0] == sCount:
+ 				constants[aname] = att
+ 				att['variability'] = 'c'
+ 			else:
+ 				singleValue[aname] = att
+ 				att['variability'] = 's'
  		else:
+ 			att['variability'] = 'v'
  			print 'Attribute:' + aname + ' total:' + str(att['sampleCount'])
  			for v, vCount in att['values'].items():
  				print v, vCount
@@ -117,12 +126,22 @@ def bioprojectAttributes(bioprojectID,apikey):
 		for a, att in constants.items() :
 			print a+':'+att['values'].keys()[0] 
 		print '____________________________________'
+ 	if len(singleValue):
+		print 	'The following have only one value in the bioproject'
+		print 	'but the attribute is not present for all samples'
+		for a, att in constants.items() :
+			print a+':'+att['values'].keys()[0] 
+		print '____________________________________'
 #	work in progress - do a json dump of the attribute details
-	projDict = {"accession":accession, "title":title, "attributes" : attDetails}	
+#	projDict = {"accession":accession, "title":title, "attributes" : attDetails}	
 #	print json.dumps(projDict, indent=4, separators=(',', ': '))
 #	print json.dumps(attDetails.keys(), indent=4, separators=(',', ': '))
-	print type(attDetails.keys())
-	
+#	print type(attDetails.keys())
+#	export for analysis
+# 	f = open('data/attributes.txt', 'a')
+# 	for attKey, att in attDetails.items():
+# 		f.write( str(bioprojectID)+'\t'+attKey+'\t'+str(att['sampleCount'])+'\t'+att['variability']+'\n')
+# 	f.close
 
 def usage():
 	print sys.argv[0] +' -k apikey -b bioprojectid'

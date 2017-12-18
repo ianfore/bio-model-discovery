@@ -24,8 +24,9 @@ bioprojectid - the numeric id of the BioProject to be analyzed e.g. 421626 rathe
 The example output for BioProject id 421626 would help a reader identify that the nine samples in the study are organized into three groups according to the "growth protocol" used. There are three replicates in each group. It also identifies that a number of attributes have the same value for all samples. It is likely that these are attributes of the study rather than the sample.
 
 ```
-____________________________________
 Attribute details for BioProject ID: 421626
+Accession:PRJNA421626
+Title:Mus musculus Transcriptome or Gene expression
 No of samples:9
 ____________________________________
 The following attributes vary across samples.
@@ -49,6 +50,7 @@ age:12 days
 dev_stage:not applicable
 tissue:Ovarian granulosa cells
 sex:female
+____________________________________
 ```
 #### Healthy/Diseased, different cell types from same subject
 In the case of BioProject 338795 the following report gives a few clues.

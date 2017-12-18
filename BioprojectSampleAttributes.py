@@ -100,8 +100,8 @@ def bioprojectAttributes(bioprojectID,apikey):
  			constants[aname] = att
  		else:
  			print 'Attribute:' + aname + ' total:' + str(att['sampleCount'])
- 			for v, sCount in att['values'].items():
- 				print v, sCount
+ 			for v, vCount in att['values'].items():
+ 				print v, vCount
  			print '____________________________________'
  		
  	if len(uniques):
@@ -124,7 +124,7 @@ def bioprojectAttributes(bioprojectID,apikey):
 		print '____________________________________'
 #	work in progress - do a json dump of the attribute details
 	projDict = {"accession":accession, "title":title, "attributes" : attDetails}	
- 	print json.dumps(projDict, indent=4, separators=(',', ': '))
+#	print json.dumps(projDict, indent=4, separators=(',', ': '))
 	
 
 def usage():

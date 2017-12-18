@@ -41,31 +41,26 @@ def bioprojectAttributes(bioprojectID,apikey):
 	sfetch = eutils + 'efetch.fcgi?db=biosample&api_key='+ apikey
 	
 	# get linked samples
-	# the behavior of elink is such that the call to it will only retrieve 500 samples
-	# for now that is a good enough way to stop the program consuming resources
 	url = elink + '&id=' + bioprojectID 
 	attDetails = {}
 
 	# first we do the query and get a list of ids so we know how many hits we get
-
 	r = requests.get(url)
 	b = r.json()
 	d = b['linksets'][0]['linksetdbs'][0]['links']
 	sCount = len(d)
 	
 	# now do the same query to set up the list in the history server
-	# there may be a way of getting this from this second query -
+	# there may be a way of getting the list size from this second query -
 	# but I haven't found how	
 	url += '&cmd=neighbor_history'
 	r = requests.get(url)
 	b = r.json()
 	d = b['linksets'][0]
 	webenv = d['webenv']
-	print webenv
 	querykey = d['linksetdbhistories'][0]['querykey']
-	print querykey
+	# set up query for sample details to use list of ids from the previous query
 	url = sfetch + '&query_key='+querykey+'&WebEnv='+webenv
-	print url
 
  	getSampleAttributes(attDetails, url)
  	print '____________________________________'
@@ -125,6 +120,8 @@ def bioprojectAttributes(bioprojectID,apikey):
 #	work in progress - do a json dump of the attribute details
 	projDict = {"accession":accession, "title":title, "attributes" : attDetails}	
 #	print json.dumps(projDict, indent=4, separators=(',', ': '))
+#	print json.dumps(attDetails.keys(), indent=4, separators=(',', ': '))
+	print type(attDetails.keys())
 	
 
 def usage():

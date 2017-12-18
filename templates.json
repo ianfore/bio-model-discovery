@@ -1,0 +1,40 @@
+{ "template1":
+[
+    "histological_type",
+    "study_design",
+    "gap_subject_id",
+    "gap_sample_id",
+    "submitted_sample_id",
+    "submitted_subject_id",
+    "molecular_data_type",
+    "biospecimen_repository_sample_id",
+    "study_name",
+    "gap_consent_short_name",
+    "sex",
+    "subject_is_affected",
+    "tissue",
+    "gap_accession",
+    "gap_consent_code",
+    "analyte_type",
+    "study_disease",
+    "biospecimen_repository",
+    "is_tumor",
+    "submitter_handle"
+],
+"template2":
+[
+    "cell_type",
+    "disease_duration_yrs",
+    "disease_stage",
+    "age",
+    "biomaterial_provider",
+    "isolate",
+    "disease",
+    "sex",
+    "tissue",
+    "phenotype",
+    "cell_subtype",
+    "thymus_status",
+    "treatment"
+]
+}

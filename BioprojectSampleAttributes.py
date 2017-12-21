@@ -129,8 +129,8 @@ def bioprojectAttributes(bioprojectID,apikey):
  	if len(singleValue):
 		print 	'The following have only one value in the bioproject'
 		print 	'but the attribute is not present for all samples'
-		for a, att in constants.items() :
-			print a+':'+att['values'].keys()[0] 
+		for a, att in singleValue.items() :
+			print a+':'+att['values'].keys()[0] + ' ' + str(att['values'].values()[0])
 		print '____________________________________'
 #	work in progress - do a json dump of the attribute details
 #	projDict = {"accession":accession, "title":title, "attributes" : attDetails}	
@@ -138,10 +138,10 @@ def bioprojectAttributes(bioprojectID,apikey):
 #	print json.dumps(attDetails.keys(), indent=4, separators=(',', ': '))
 #	print type(attDetails.keys())
 #	export for analysis
-# 	f = open('data/attributes.txt', 'a')
-# 	for attKey, att in attDetails.items():
-# 		f.write( str(bioprojectID)+'\t'+attKey+'\t'+str(att['sampleCount'])+'\t'+att['variability']+'\n')
-# 	f.close
+#  	f = open('data/attributes.txt', 'a')
+#  	for attKey, att in attDetails.items():
+#  		f.write( str(bioprojectID)+'\t'+attKey+'\t'+str(att['sampleCount'])+'\t'+att['variability']+'\n')
+#  	f.close
 
 def usage():
 	print sys.argv[0] +' -k apikey -b bioprojectid'

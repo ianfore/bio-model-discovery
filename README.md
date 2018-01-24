@@ -17,6 +17,7 @@ Note that only the first 5000 samples for a project will be retrieved.
 BioprojectSampleAttributes -k apikey -b bioprojectid
 
 apikey - your personal NCBI API key - see above
+
 bioprojectid - the numeric id of the BioProject to be analyzed e.g. 421626 rather than PRJNA421626.
 
 ### Examples

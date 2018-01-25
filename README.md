@@ -18,6 +18,8 @@ BioprojectSampleAttributes -k apikey -b bioprojectid
 
 apikey - your personal NCBI API key - see above
 
+If you have an apikey set up it can be checked here <https://www.ncbi.nlm.nih.gov/account/settings/>
+
 bioprojectid - the numeric id of the BioProject to be analyzed e.g. 421626 rather than PRJNA421626.
 
 ### Examples

@@ -6,3 +6,9 @@ data/attributes.xlsx
 data/~$attributes.xlsx
 
 data/~$attributes.xlsx
+
+progress_test.py
+
+load_templates.py
+
+templates.json

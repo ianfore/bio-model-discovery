@@ -1,6 +1,8 @@
 # bio-model-discovery
 The aim of this project is to discover the data model of a biological study. The data model reflects the design of the study and is driven by the scientists who create the study. Many systems accommodate this by allowing users to specify the attributes/observations or data elements recorded in the study. It is often not clear which of these attributes are observations and which represent the factors/dimensions of the study.
 
+This work was done as part of the NCI Cancer Data Service and is of more general use to that project in showing how to use the NCBI Entrez APIs to read publically available subject and sample attributes for samples which have genomic data in the CDS.
+
 ## BioprojectSampleAttributes.py
 Command line utility to retrieve the attributes of the samples for a specified BioProject and summarize the values of those attributes across the project.
 

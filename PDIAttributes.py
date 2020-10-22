@@ -1,3 +1,4 @@
+''' Module to integrate functions of this tool into Pentaho Data Integration'''
 #!/usr/bin/python
 import sys
 import getopt

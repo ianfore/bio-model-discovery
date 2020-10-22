@@ -63,7 +63,7 @@ def bioprojectAttributes(bioprojectID,apikey):
 	url = sfetch + '&query_key='+querykey+'&WebEnv='+webenv
 
 	getSampleAttributes(attDetails, url)
-	print '____________________________________'
+	print ('____________________________________')
 	
 	# Get some details of the bioproject
  	tree = ET.parse(urllib.urlopen(pfetch+bioprojectID))
@@ -71,20 +71,20 @@ def bioprojectAttributes(bioprojectID,apikey):
  	project = root[0][0]
  	accession = project[0][0].get('accession')
  	title = project.find('ProjectDescr').find('Title').text
-	print 'Attribute details for BioProject ID: ' + bioprojectID
- 	print 'Accession:'+accession
- 	print 'Title:'+title
+	print ('Attribute details for BioProject ID: ' + bioprojectID)
+ 	print ('Accession:'+accession)
+ 	print ('Title:'+title)
  	
 	# Summarize the attributes for this bioproject
 	uniques = {}	
 	almostUniques = {}	
 	constants = {}	
 	singleValue = {}	
-	print 'No of samples:' + str(sCount)
- 	print '____________________________________'
- 	print 	'The following attributes vary across samples.'
- 	print 	'Some may indicate the project design/model.'
- 	print 	'Some may be sample/subject observations/measurements/data elements.'
+	print ('No of samples:' + str(sCount))
+ 	print ('____________________________________')
+ 	print (	'The following attributes vary across samples.')
+ 	print (	'Some may indicate the project design/model.')
+ 	print (	'Some may be sample/subject observations/measurements/data elements.')
  	print
  	for aname, att in attDetails.items():
  		vList = att['values']
@@ -103,40 +103,40 @@ def bioprojectAttributes(bioprojectID,apikey):
  				att['variability'] = 's'
  		else:
  			att['variability'] = 'v'
- 			print 'Attribute:' + aname + ' total:' + str(att['sampleCount'])
+ 			print ('Attribute:' + aname + ' total:' + str(att['sampleCount']))
  			for v, vCount in att['values'].items():
- 				print v, vCount
- 			print '____________________________________'
+ 				print (v, vCount)
+ 			print ('____________________________________')
  		
  	if len(uniques):
-		print 	'The following attributes have a unique value for each sample. '
-		print 	'They are therefore likely to some kind of identifier.'
+		print (	'The following attributes have a unique value for each sample. ')
+		print (	'They are therefore likely to some kind of identifier.')
 		for a, att in uniques.items():
-			print a, att['sampleCount']
-		print '____________________________________'
+			print (a, att['sampleCount'])
+		print ('____________________________________')
  	if len(almostUniques):
-		print 	'The following attributes have a unique value for more than 80% of samples.'
-		print 	'They are often a subject identifier.'
+		print (	'The following attributes have a unique value for more than 80% of samples.')
+		print (	'They are often a subject identifier.')
 		for a, att in almostUniques.items():
-			print a, att['sampleCount']
-		print '____________________________________'
+			print (a, att['sampleCount'])
+		print ('____________________________________')
  	if len(constants):
-		print 	'The following have the same value for all samples.'
-		print 	'They are likely to be an attribute of the study rather than the sample'
+		print (	'The following have the same value for all samples.')
+		print (	'They are likely to be an attribute of the study rather than the sample')
 		for a, att in constants.items() :
-			print a+':'+att['values'].keys()[0] 
-		print '____________________________________'
+			print (a+':'+att['values'].keys()[0] )
+		print ('____________________________________')
  	if len(singleValue):
-		print 	'The following have only one value in the bioproject'
-		print 	'but the attribute is not present for all samples'
+		print (	'The following have only one value in the bioproject')
+		print (	'but the attribute is not present for all samples')
 		for a, att in singleValue.items() :
-			print a+':'+att['values'].keys()[0] + ' ' + str(att['values'].values()[0])
-		print '____________________________________'
+			print (a+':'+att['values'].keys()[0] + ' ' + str(att['values'].values()[0]))
+		print ('____________________________________')
 #	work in progress - do a json dump of the attribute details
 #	projDict = {"accession":accession, "title":title, "attributes" : attDetails}	
-#	print json.dumps(projDict, indent=4, separators=(',', ': '))
-#	print json.dumps(attDetails.keys(), indent=4, separators=(',', ': '))
-#	print type(attDetails.keys())
+#	print (json.dumps(projDict, indent=4, separators=(',', ': ')))
+#	print (json.dumps(attDetails.keys(), indent=4, separators=(',', ': ')))
+#	print (type(attDetails.keys()))
 #	export for analysis
 #  	f = open('data/attributes.txt', 'a')
 #  	for attKey, att in attDetails.items():
@@ -144,7 +144,7 @@ def bioprojectAttributes(bioprojectID,apikey):
 #  	f.close
 
 def usage():
-	print sys.argv[0] +' -k apikey -b bioprojectid'
+	print (sys.argv[0] +' -k apikey -b bioprojectid')
 	
 def main(argv):
     bioprojectid = ''

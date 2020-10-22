@@ -55,7 +55,10 @@ def DataFrameAttributes(path):
 		else:
 			#att['variability'] = 'v'
 			print ('Column:' + c )
-			print (df[c].value_counts())
+			print ('value\trowCount')
+			counts = df[c].value_counts().to_dict()
+			for k,v in counts.items():
+				print('{}\t{}'.format(k,v))
 			print ('____________________________________')
 		
 	if len(uniques):

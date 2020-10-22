@@ -1,6 +1,8 @@
 # bio-model-discovery
 The aim of this project is to discover the data model of a biological study. The data model reflects the design of the study and is driven by the scientists who create the study. Many systems accommodate this by allowing users to specify the attributes/observations or data elements recorded in the study. It is often not clear which of these attributes are observations and which represent the factors/dimensions of the study.
 
+This work was done as part of the NCI Cancer Data Service and is of more general use to that project in showing how to use the NCBI Entrez APIs to read publically available subject and sample attributes for samples which have genomic data in the CDS.
+
 ## BioprojectSampleAttributes.py
 Command line utility to retrieve the attributes of the samples for a specified BioProject and summarize the values of those attributes across the project.
 
@@ -143,5 +145,66 @@ ____________________________________
 ```
 However it takes some further exploration of the data itself to identify the following structure. see [PRJNA338795.xlsx](https://github.com/ianfore/bio-model-discovery/files/1564065/PRJNA338795.xlsx)
 
+#### dbGaP Study - "Detection of Colorectal Cancer Susceptibility Loci Using Genome-Wide Sequencing"
+The dbGaP study id for this project is phs001554. The corresponding Bioproject id is 437032. The following output from BioprojectSampleAttributes.py summarizes the attributes recorded in BioSample for the samples used in this study. Note that only minimal phenotypic data is recorded about each sample. Additional attributes of the samples and subjects are available as controlled access data. For many (most?) dbGaP studies these contolled access attributes are necessary to give proper context to the genomic data held in dbGaP/SRA.
 
+Note: Colloquially this study has been referred to as GECCO. This is actually the name of the consortium that conducted the study [Genetics and Epidemirology of Colorectal Cancer Consortium](https://www.fredhutch.org/en/research/divisions/public-health-sciences-division/research/cancer-prevention/genetics-epidemiology-colorectal-cancer-consortium-gecco.html) . GECCO conducts many studies so phs001554 should probably be referred to by its full title above. "GECCO" has been a convenient shorthand for the study, and will probably continue to be so. Just be aware!
 
+```
+____________________________________
+Attribute details for BioProject ID: 437032
+Accession:PRJNA437032
+Title:Detection of Colorectal Cancer Susceptibility Loci Using Genome-Wide Sequencing
+No of samples:2892
+____________________________________
+The following attributes vary across samples.
+Some may indicate the project design/model.
+Some may be sample/subject observations/measurements/data elements.
+
+Attribute:gap_consent_short_name total:2892
+HMB-IRB-NPU 149
+HMB-IRB 769
+GRU 617
+CADM 616
+DS-CC-NPU-GSO 741
+____________________________________
+Attribute:sex total:2892
+male 1075
+female 1817
+____________________________________
+Attribute:subject_is_affected total:2892
+Yes 1927
+No 965
+____________________________________
+Attribute:gap_consent_code total:2892
+1 617
+3 149
+2 769
+5 616
+4 741
+____________________________________
+The following attributes have a unique value for each sample. 
+They are therefore likely to some kind of identifier.
+submitted_subject_id 2892
+biospecimen_repository_sample_id 2892
+gap_subject_id 2892
+gap_sample_id 2892
+submitted_sample_id 2892
+____________________________________
+The following have the same value for all samples.
+They are likely to be an attribute of the study rather than the sample
+study_design:Case-Control
+molecular_data_type:SNP/CNV Genotypes (NGS)
+analyte_type:DNA
+study_name:Detection of Colorectal Cancer Susceptibility Loci Using Genome-Wide Sequencing
+tissue:Blood
+gap_accession:phs001554
+biospecimen_repository:NCI_CRC_Susceptibility
+is_tumor:No
+submitter_handle:NCI_CRC_Susceptibility
+____________________________________
+The following have only one value in the bioproject
+but the attribute is not present for all samples
+study_disease:Colorectal Neoplasms 1927
+____________________________________
+```
